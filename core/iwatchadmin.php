@@ -49,9 +49,13 @@
 
 		public static function username_exists($username){
 			global $db;
+			$q=$db->query("select count(username) from citizen where (username='".$username."')");
+			$r1=$q->fetch_row();
 			$q=$db->query("select count(username) from iwatchadmin where (username='".$username."')");
-			$r=$q->fetch_row();
-			return $r[0]>0;
+			$r2=$q->fetch_row();
+			$q=$db->query("select count(username) from elected where (username='".$username."')");
+			$r3=$q->fetch_row();
+			return ($r1[0] + $r2[0] + $r3[0])>0;
 		}
 
 		public static function create($username,$password){

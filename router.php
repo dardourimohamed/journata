@@ -15,9 +15,14 @@
 				case 'register':
 					die(include"api/register.php");break;
 				break;
+				case 'logout':
+					session_destroy();
+					$user=null;
+					die();break;
+				break;
 				default:
-					# code...
-					break;
+					die(json_encode(array("status"=>"url_error")));
+				break;
 			}
 
 		default:
