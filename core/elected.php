@@ -97,7 +97,7 @@
 							return $r[0];
 					break;
 					case 'must_be_present':
-							$q=$db->query("select count(elected.id) from session, elected_committee, elected where (session.start<NOW() and session.end>NOW() and session.id_committee=elected_committee.id_committee and elected_committee.id_elected='".$this->id."')"));
+							$q=$db->query("select count(elected.id) from session, elected_committee, elected where (session.start<NOW() and session.end>NOW() and session.id_committee=elected_committee.id_committee and elected_committee.id_elected='".$this->id."')");
 							$r=$q->fetch_row();
 							return $r[0]>0;
 					break;
