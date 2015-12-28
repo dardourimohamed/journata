@@ -33,6 +33,9 @@
 							$r=$q->fetch_row();
 							return $r[0]==1;
 					break;
+					case 'type':
+						return "elected";
+					break;
 					case 'displayname':
 							return "@".$this->username;
 					break;
@@ -102,7 +105,7 @@
 							return $r[0]>0;
 					break;
 					default:
-							$q=$db->query("select ".$name." from elected where (id='".$this->id."')");
+							$q=$db->query("select ".$name." from elected where (id='".$this->id."')") or die($db->error);
 							$r=$q->fetch_row();
 							return $r[0];
 					break;

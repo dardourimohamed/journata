@@ -36,6 +36,9 @@
 					case 'displayname':
 						return "@".$this->username;
 					break;
+					case 'type':
+						return "citizen";
+					break;
 					default:
 						$q=$db->query("select ".$name." from citizen where (id='".$this->id."')");
 						$r=$q->fetch_row();

@@ -36,6 +36,9 @@
 					case 'displayname':
 						return "@".$this->username;
 					break;
+					case 'type':
+						return "iwatchadmin";
+					break;
 					default:
 						$q=$db->query("select ".$name." from iwatchadmin where (id='".$this->id."')");
 						$r=$q->fetch_row();
