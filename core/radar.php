@@ -32,7 +32,7 @@
                       return new elected($this->id_elected);
                     break;
                     default:
-                        $q=$db->query("select ".$name." from radar where (id='".$this->id."')");
+                        $q=$db->query("select ".$name." from radar where (id='".$this->id."')") or die($db->error);
 			                  $r=$q->fetch_row();
                         return $r[0];
                     break;
