@@ -27,7 +27,7 @@
       $reviews[]=array(
         "id"=>$r->id,
         "committee"=>array("id"=>$committee->id, "name"=>$committee->name),
-        "session"=>array("from"=>$session->from, "to"=>$session->to),
+        "session"=>array("from"=>$session->start, "to"=>$session->end),
         "text"=>$c->name
       );
     }
