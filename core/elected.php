@@ -127,12 +127,12 @@
 
 		public function set_top($citizen, $session){
 			global $db;
-			$db->query("insert into top_worst(id_citizen, id_elected, id_session, toporworst) values('".$citizen->id."', '".$this->id."', ".($session?"'".$session->id"'":"NULL").", '1') ON DUPLICATE KEY UPDATE toporworst='1'");
+			$db->query("insert into top_worst(id_citizen, id_elected, id_session, toporworst) values('".$citizen->id."', '".$this->id."', ".($session?"'".$session->id."'":"NULL").", '1') ON DUPLICATE KEY UPDATE toporworst='1'");
 		}
 
 		public function set_worst($citizen, $session){
 			global $db;
-			$db->query("insert into top_worst(id_citizen, id_elected, id_session, toporworst) values('".$citizen->id."', '".$this->id."', ".($session?"'".$session->id"'":"NULL").", '-1') ON DUPLICATE KEY UPDATE toporworst='-1'");
+			$db->query("insert into top_worst(id_citizen, id_elected, id_session, toporworst) values('".$citizen->id."', '".$this->id."', ".($session?"'".$session->id."'":"NULL").", '-1') ON DUPLICATE KEY UPDATE toporworst='-1'");
 		}
 
 		public function radar($latitude, $longitude){
