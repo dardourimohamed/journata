@@ -79,9 +79,11 @@
 		public static function must_be_present(){
 			global $db;
 			$list=array();
-			$q=$db->query("select where(session.start<NOW())");
-			$r=$q->fetch_row();
-			
+			$q=$db->query("select elected.id from session, elected_committee, elected where(session.start<NOW() and session.end>NOW() and session.id_committee=elected_committee.id_committee and elected_committee.id_elected=elected.id)");
+			while ($r=$q->fetch_row()) {
+				$list[]=new elected($r[0]);
+			}
+			return $list;
 		}
 
 		public static function top($count=5){
