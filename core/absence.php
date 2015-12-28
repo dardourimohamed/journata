@@ -11,7 +11,7 @@
 
         public function __set($name,$value){
             global $db;
-            if ($this->id != NULL) {
+            if ($this->id_elected != NULL && $this->id_session != NULL) {
                 switch($name){
                     case 'elected':
                         $this->id_elected=$value->id;
@@ -28,11 +28,8 @@
 
         public function __get($name){
             global $db;
-            if ($this->id != NULL) {
+            if ($this->id_elected != NULL && $this->id_session != NULL) {
                 switch($name){
-                    case "id":
-                        return $this->id;
-                    break;
                     case 'elected':
                       return new elected($this->id_elected);
                     break;

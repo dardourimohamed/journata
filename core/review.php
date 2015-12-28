@@ -12,7 +12,7 @@
             if ($this->id != NULL) {
                 switch($name){
                     default :
-                        $db->query("update reviews set ".$name."=".($value===null?"NULL":"'".$db->real_escape_string($value)."'")." where (id='".$this->id."')");
+                        $db->query("update review set ".$name."=".($value===null?"NULL":"'".$db->real_escape_string($value)."'")." where (id='".$this->id."')");
                     break;
                 }
             }
@@ -29,7 +29,7 @@
                         return new session($this->id_session);
                     break;
                     default:
-                        $q=$db->query("select ".$name." from reviews where (id='".$this->id."')");
+                        $q=$db->query("select ".$name." from review where (id='".$this->id."')");
 			                  $r=$q->fetch_row();
                         return $r[0];
                     break;
@@ -41,13 +41,13 @@
 
         public static function create($text, $elected, $session=null){
             global $db;
-            $db->query("insert into reviews (id_elected, id_session, text) values('".$elected->id."', ".($session?"'".$session->id."'":"NULL").", '".$db->real_escape_string($text)."')");
+            $db->query("insert into review (id_elected, id_session, text) values('".$elected->id."', ".($session?"'".$session->id."'":"NULL").", '".$db->real_escape_string($text)."')");
             return new review($db->insert_id);
         }
 
         public function delete(){
             global $db;
-            $db->query("delete from reviews where (id='".$this->id."')");
+            $db->query("delete from review where (id='".$this->id."')");
         }
 
     }

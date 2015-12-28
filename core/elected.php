@@ -62,7 +62,7 @@
 					break;
 					case 'reviews':
 							$list=array();
-							$q=$db->query("select id from reviews where (id_elected='".$this->id."')");
+							$q=$db->query("select id from review where (id_elected='".$this->id."')");
 							while($r=$q->fetch_row()){
 								$list[]=new review($r[0]);
 							}
