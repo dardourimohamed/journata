@@ -54,9 +54,9 @@
 					break;
 					case 'absences':
 							$list=array();
-							$q=$db->query("select id from absence where (id_elected='".$this->id."')");
+							$q=$db->query("select id_elected, id_session from absence where (id_elected='".$this->id."')");
 							while($r=$q->fetch_row()){
-								$list[]=new absence($r[0]);
+								$list[]=new absence($r[0], $r[1]);
 							}
 							return $list;
 					break;

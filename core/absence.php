@@ -1,10 +1,12 @@
 <?php
     class absence{
 
-        private $id;
+        private $id_elected;
+        private $id_session;
 
-        public function __construct($nid){
-            $this->id = $nid;
+        public function __construct($nid_elected, $nid_session){
+            $this->id_elected = $nid_elected;
+            $this->id_session = $nid_session;
         }
 
         public function __set($name,$value){
@@ -18,7 +20,7 @@
                         $this->id_session=$value->id;
                     break;
                     default :
-                        $db->query("update absence set ".$name."=".($value===null?"NULL":"'".$db->real_escape_string($value)."'")." where (id='".$this->id."')");
+                        $db->query("update absence set ".$name."=".($value===null?"NULL":"'".$db->real_escape_string($value)."'")." where (id_elected='".$this->id_elected."' and id_session='".$this->id_session."')");
                     break;
                 }
             }
@@ -38,7 +40,7 @@
                       return new session($this->id_session);
                     break;
                     default:
-                        $q=$db->query("select ".$name." from absence where (id='".$this->id."')");
+                        $q=$db->query("select ".$name." from absence where (id_elected='".$this->id_elected."' and id_session='".$this->id_session."')");
 			                  $r=$q->fetch_row();
                         return $r[0];
                     break;
@@ -48,15 +50,15 @@
             }
         }
 
-        public static function create($param){
+        public static function create($elected, $absence){
             global $db;
-            $db->query("insert into absence (col) values('".$db->real_escape_string($param)."')");
+            $db->query("insert into absence (id_elected, id_absence) values('".$elected->id."', '".$absence->id."')");
             return new absence($db->insert_id);
         }
 
         public function delete(){
             global $db;
-            $db->query("delete from absence where (id='".$this->id."')");
+            $db->query("delete from absence where (id_elected='".$this->id_elected."' and id_session='".$this->id_session."')");
         }
 
     }
