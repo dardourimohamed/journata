@@ -42,7 +42,7 @@
 					case 'score':
 							$q=$db->query("select sum(toporworst) from top_worst where (id_elected='".$this->id."')");
 							$r=$q->fetch_row();
-							return $r[0];
+							return intval($r[0]);
 					break;
 					case 'committees':
 							$list=array();
@@ -164,7 +164,7 @@
 				usort($list, function($a, $b){
 						return $b["score"] - $a["score"];
 				});
-				return array_slice($list, 0, $count);
+				return $list;
 		}
 
 		public static function worst($count=5){
