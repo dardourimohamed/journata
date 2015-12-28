@@ -36,6 +36,12 @@
                     case 'session':
                       return new session($this->id_session);
                     break;
+                    case 'id_elected':
+                      return $this->id_elected;
+                    break;
+                    case 'id_session':
+                      return $this->id_session;
+                    break;
                     default:
                         $q=$db->query("select ".$name." from absence where (id_elected='".$this->id_elected."' and id_session='".$this->id_session."')");
 			                  $r=$q->fetch_row();
