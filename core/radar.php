@@ -11,6 +11,9 @@
             global $db;
             if ($this->id != NULL) {
                 switch($name){
+                    case 'elected':
+                        $this->id_elected=$value->id;
+                    break;
                     default :
                         $db->query("update radar set ".$name."=".($value===null?"NULL":"'".$db->real_escape_string($value)."'")." where (id='".$this->id."')");
                     break;
@@ -24,6 +27,9 @@
                 switch($name){
                     case "id":
                         return $this->id;
+                    break;
+                    case 'elected':
+                      return new elected($this->id_elected);
                     break;
                     default:
                         $q=$db->query("select ".$name." from radar where (id='".$this->id."')");
