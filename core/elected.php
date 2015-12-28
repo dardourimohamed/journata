@@ -36,6 +36,35 @@
 					case 'displayname':
 						return "@".$this->username;
 					break;
+					case 'score':
+						$q=$db->query("select sum(toporworst) from top_worst where (id_elected='".$this->id."')");
+						$r=$q->fetch_row();
+						return $r[0];
+					break;
+					case 'commitees':
+						$list=array();
+						$q=$db->query("select elected_committee.id_committee from elected_committee, committee where (id_elected='".$this->id."' and elected_committee.id_committee=committee.id)");
+						while($r=$q->fetch_row()){
+							$list[]=new committee($r[0]);
+						}
+						return $list;
+					break;
+					case 'total_presence':
+						$q=$db->query("select count(session.id) from elected_committee, session, absence where (elected_committee.id_elected='".$this->id."' and absence.id_elected='".$this->id."' and elected_committee.id_committee=session.id_committee and session.id<>absence.id_session)");
+						$r=$q->fetch_row();
+						return $r[0];
+					break;
+					case 'total_sessions':
+						$q=$db->query("select count(session.id) from elected_committee, session where (elected_committee.id_elected='".$this->id."' and elected_committee.id_committee=session.id_committee)");
+						$r1=$q->fetch_row();
+						return $r[0];
+					break;
+					case 'total_absence':
+						$q=$db->query("select count(*) from absence where (id_elected='".$this->id."')");
+						$r1=$q->fetch_row();
+						return $r[0];
+					break;
+
 					default:
 						$q=$db->query("select ".$name." from elected where (id='".$this->id."')");
 						$r=$q->fetch_row();
@@ -45,6 +74,47 @@
 			}else{
 				return NULL;
 			}
+		}
+
+		public static function must_be_present(){
+			global $db;
+			$list=array();
+			$q=$db->query("select where(session.start<NOW())")
+		}
+
+		public static function top($count=5){
+			global $db;
+			$list=array();
+			foreach (elected::get_all() as $e) {
+				$s = $e->score;
+				if($s>0) $list[]=array("elected"=>$e, "score"=>$s);
+			}
+			usort($list, function($a, $b){
+				return $b["score"] - $a["score"];
+			});
+			return array_slice($list, 0, $count);
+		}
+
+		public static function worst($count=5){
+			global $db;
+			$list=array();
+			foreach (elected::get_all() as $e) {
+				$s = $e->score;
+				if($s<0) $list[]=array("elected"=>$e, "score"=>($s*(-1)));
+			}
+			usort($list, function($a, $b){
+				return $b["score"] - $a["score"];
+			});
+			return array_slice($list, 0, $count);
+		}
+
+		public static function get_all(){
+			global $db;
+			$q=$db->query("select id from elected");
+			while($r=$q->fetch_row()){
+				$list[]=new elected($r[0]);
+			}
+			return $list;
 		}
 
 		public static function username_exists($username){
