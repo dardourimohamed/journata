@@ -147,7 +147,7 @@
 		public static function must_be_present(){
 				global $db;
 				$list=array();
-				$q=$db->query("select elected.id from session, elected_committee, elected, absence where (session.start<NOW() and session.end>NOW() and session.id_committee=elected_committee.id_committee and elected_committee.id_elected=elected.id and absence.certified=1 and elected.id<>absence.id)") or die($db->error);
+				$q=$db->query("select elected.id from session, elected_committee, elected, absence where (session.start<NOW() and session.end>NOW() and session.id_committee=elected_committee.id_committee and elected_committee.id_elected=elected.id and absence.certified=1 and elected.id<>absence.id_elected)") or die($db->error);
 				while ($r=$q->fetch_row()) {
 						$list[]=new elected($r[0]);
 				}
