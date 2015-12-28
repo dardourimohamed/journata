@@ -14,7 +14,6 @@
       $session=$a->session;
       $committee=$session->committee;
       $absences[]=array(
-        "id"=>$a->id,
         "certified"=>($a->certified?true:false),
         "committee"=>array("id"=>$committee->id, "name"=>$committee->name),
         "from"=>$session->start,

@@ -33,9 +33,9 @@
                     break;
                     case 'absences':
                         $list=array();
-                        $q=$db->query("select id from absence where (id_session='".$this->id."')");
+                        $q=$db->query("select id_elected from absence where (id_session='".$this->id."')");
                         while($r=$q->fetch_row()){
-                          $list[]=new absence($r[0]);
+                          $list[]=new absence($r[0], $this->id);
                         }
                         return $list;
                     break;

@@ -43,7 +43,7 @@
                       return $this->id_session;
                     break;
                     default:
-                        $q=$db->query("select ".$name." from absence where (id_elected='".$this->id_elected."' and id_session='".$this->id_session."')");
+                        $q=$db->query("select ".$name." from absence where (id_elected='".$this->id_elected."' and id_session='".$this->id_session."')");// or die($db->error);
 			                  $r=$q->fetch_row();
                         return $r[0];
                     break;
@@ -53,9 +53,9 @@
             }
         }
 
-        public static function create($elected, $absence){
+        public static function create($elected, $session){
             global $db;
-            $db->query("insert into absence (id_elected, id_absence) values('".$elected->id."', '".$absence->id."')");
+            $db->query("insert into absence (id_elected, id_session) values('".$elected->id."', '".$session->id."')");
             return new absence($db->insert_id);
         }
 

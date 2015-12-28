@@ -86,7 +86,7 @@
 					break;
 					case 'count_total_absence':
 							$q=$db->query("select count(*) from absence where (id_elected='".$this->id."')");
-							$r1=$q->fetch_row();
+							$r=$q->fetch_row();
 							return $r[0];
 					break;
 					case 'count_total_presence':
@@ -96,7 +96,7 @@
 					break;
 					case 'count_total_sessions':
 							$q=$db->query("select count(session.id) from elected_committee, session where (elected_committee.id_elected='".$this->id."' and elected_committee.id_committee=session.id_committee)");
-							$r1=$q->fetch_row();
+							$r=$q->fetch_row();
 							return $r[0];
 					break;
 					case 'must_be_present':
