@@ -13,10 +13,11 @@
 				case 'logout': // /api/logout
 					session_destroy();
 					$user=null;
-					die();break;
+					die(json_encode(array("status"=>"success")));break;
 				case 'must_be_present':die(include"api/must_be_present.php");break; //  : /api/must_be_present
 				case 'top_elected':die(include"api/top_elected.php");break; //  : /api/top_elected
 				case 'worst_elected':die(include"api/worst_elected.php");break; //  : /api/worst_elected
+				case 'radar':die(include"api/radar.php");break; //  : /api/radar
 				default:die(json_encode(array("status"=>"url_error")));break; // : /api/*
 			}
 		default:$req_page="pages/404/controller.php";break; // : /*

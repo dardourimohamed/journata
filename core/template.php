@@ -46,7 +46,7 @@
                     */
                     default:
                         $q=$db->query("select ".$name." from template where (id='".$this->id."')");
-			            $r=$q->fetch_row();
+			                  $r=$q->fetch_row();
                         return $r[0];
                     break;
                 }
@@ -58,7 +58,7 @@
         public static function create($param){
             global $db;
             $db->query("insert into template (col) values('".$db->real_escape_string($param)."')");
-            return new user($db->insert_id);
+            return new template($db->insert_id);
         }
 
         public function delete(){

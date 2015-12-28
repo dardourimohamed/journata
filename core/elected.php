@@ -64,7 +64,11 @@
 						$r1=$q->fetch_row();
 						return $r[0];
 					break;
-
+					case 'must_be_present':
+						$q=$db->query("select count(elected.id) from session, elected_commitee, elected where (session.start<NOW() and session.end>NOW() and session.id_committee=elected_commitee.id_committee and elected_commitee.id_elected='".$this->id."')"));
+						$r=$q->fetch_row();
+						return $r[0]>0;
+					break;
 					default:
 						$q=$db->query("select ".$name." from elected where (id='".$this->id."')");
 						$r=$q->fetch_row();
@@ -74,6 +78,12 @@
 			}else{
 				return NULL;
 			}
+		}
+
+		public function radar($latitude, $longitude){
+			global $db;
+			$db->query("insert into radar (id_elected, latitude, longitude, time) values ('".$this->id."', '".$latitide."', '".$longitude."', NOW())");
+			return new radar($db->insert_id);
 		}
 
 		public static function must_be_present(){
