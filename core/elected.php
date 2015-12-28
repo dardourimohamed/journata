@@ -79,7 +79,9 @@
 		public static function must_be_present(){
 			global $db;
 			$list=array();
-			$q=$db->query("select where(session.start<NOW())")
+			$q=$db->query("select where(session.start<NOW())");
+			$r=$q->fetch_row();
+			
 		}
 
 		public static function top($count=5){
