@@ -50,6 +50,14 @@
             }
         }
 
+        public static function last_general_meeting(){
+          global $db;
+          $q=$db->query("select count (*), id from session where (id_committee IS NULL) order by start desc limit 1");
+          $r=$q->fetch_row();
+          if($r[0]) return new session($r[1]);
+          else return null;
+        }
+
         public static function create($param){
             global $db;
             $db->query("insert into session (col) values('".$db->real_escape_string($param)."')");

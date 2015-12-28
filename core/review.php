@@ -39,9 +39,9 @@
             }
         }
 
-        public static function create($param){
+        public static function create($text, $elected, $session=null){
             global $db;
-            $db->query("insert into reviews (col) values('".$db->real_escape_string($param)."')");
+            $db->query("insert into reviews (id_elected, id_session, text) values('".$elected->id."', ".($session?"'".$session->id"'":"NULL").", '".$db->real_escape_string($text)."')");
             return new review($db->insert_id);
         }
 

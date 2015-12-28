@@ -112,6 +112,29 @@
 			}
 		}
 
+		public function dont_pay(){
+			global $db;
+			$q=$db->query("select count(*) from dont_pay where (id_elected='".$this->id."' and date=CURDATE())");
+			$r=$q->fetch_row();
+			if($r[0]) $db->query("update dont_pay set count=count+1 where (id_elected='".$this->id."' and date=CURDATE())");
+			$db->query("insert into dont_pay(id_elected, date, count, approved) values('".$this->id."', CURDATE(), 1, 0)");
+		}
+
+		public function approve_dont_pay(){
+			global $db;
+			$db->query("update dont_pay set approved=1 where (id_elected='".$this->id."' and date=CURDATE())");
+		}
+
+		public function set_top($citizen, $session){
+			global $db;
+			$db->query("insert into top_worst(id_citizen, id_elected, id_session, toporworst) values('".$citizen->id."', '".$this->id."', ".($session?"'".$session->id"'":"NULL").", '1') ON DUPLICATE KEY UPDATE toporworst='1'");
+		}
+
+		public function set_worst($citizen, $session){
+			global $db;
+			$db->query("insert into top_worst(id_citizen, id_elected, id_session, toporworst) values('".$citizen->id."', '".$this->id."', ".($session?"'".$session->id"'":"NULL").", '-1') ON DUPLICATE KEY UPDATE toporworst='-1'");
+		}
+
 		public function radar($latitude, $longitude){
 				global $db;
 				$db->query("insert into radar (id_elected, latitude, longitude, time) values ('".$this->id."', '".$latitide."', '".$longitude."', NOW())");

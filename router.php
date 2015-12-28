@@ -25,15 +25,16 @@
 					die(include"api/elected.php");
 				break;
 				case 'submit_top':die(include"api/submit_top.php");break; //  : /api/submit_top
-				case 'submit_worst':die(include"api/submit_worst.php");break; //  : /api/submit_top
+				case 'submit_worst':die(include"api/submit_worst.php");break; //  : /api/submit_worst
+				case 'approve_dont_pay':die(include"api/approve_dont_pay.php");break; //  : /api/approve_dont_pay
+				case 'dont_pay_suggestion':die(include"api/dont_pay_suggestion.php");break; //  : /api/dont_pay_suggestion
+				case 'elected_add':die(include"api/elected_add.php");break; //  : /api/elected_add
+				case 'elected_delete':die(include"api/elected_delete.php");break; //  : /api/elected_delete
+				case 'submit_review':die(include"api/submit_review.php");break; //  : /api/submit_review
 
 				default:die(json_encode(array("status"=>"url_error")));break; // : /api/*
 			}
 		break;
-		default:$req_page="pages/404/controller.php";break; // : /*
+		default:die(json_encode(array("status"=>"url_error")));break; // : /*
 	}
-
-	// running selected page
-	$is_ajax = (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH']=="XMLHttpRequest"); // is ajax request
-	include ($is_ajax ? $req_page : "master/controller.php");
 ?>
