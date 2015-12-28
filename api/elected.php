@@ -53,8 +53,8 @@
       "status"=>"success",
       "elected"=>array(
         "id"=>$elected->id,
-        "displayname"=>$elected->displayname,
-        "description"=>$elected->description,
+        "name"=>$elected->name,
+        "state"=>$elected->state,
         "image"=>$elected->image,
         "score"=>$elected->score,
         "count_absences"=>$elected->count_total_absence,
