@@ -43,24 +43,24 @@
 					break;
 					case 'commitees':
 						$list=array();
-						$q=$db->query("select elected_committee.id_committee from elected_committee, committee where (id_elected='".$this->id."' and elected_committee.id_committee=committee.id)");
+						$q=$db->query("select elected_commitee.id_committee from elected_commitee, committee where (id_elected='".$this->id."' and elected_commitee.id_committee=committee.id)");
 						while($r=$q->fetch_row()){
 							$list[]=new committee($r[0]);
 						}
 						return $list;
 					break;
-					case 'total_presence':
-						$q=$db->query("select count(session.id) from elected_committee, session, absence where (elected_committee.id_elected='".$this->id."' and absence.id_elected='".$this->id."' and elected_committee.id_committee=session.id_committee and session.id<>absence.id_session)");
-						$r=$q->fetch_row();
-						return $r[0];
-					break;
-					case 'total_sessions':
-						$q=$db->query("select count(session.id) from elected_committee, session where (elected_committee.id_elected='".$this->id."' and elected_committee.id_committee=session.id_committee)");
+					case 'count_total_absence':
+						$q=$db->query("select count(*) from absence where (id_elected='".$this->id."')");
 						$r1=$q->fetch_row();
 						return $r[0];
 					break;
-					case 'total_absence':
-						$q=$db->query("select count(*) from absence where (id_elected='".$this->id."')");
+					case 'count_total_presence':
+						$q=$db->query("select count(session.id) from elected_commitee, session, absence where (elected_commitee.id_elected='".$this->id."' and absence.id_elected='".$this->id."' and elected_commitee.id_committee=session.id_committee and session.id<>absence.id_session)");
+						$r=$q->fetch_row();
+						return $r[0];
+					break;
+					case 'count_total_sessions':
+						$q=$db->query("select count(session.id) from elected_commitee, session where (elected_commitee.id_elected='".$this->id."' and elected_commitee.id_committee=session.id_committee)");
 						$r1=$q->fetch_row();
 						return $r[0];
 					break;
@@ -79,7 +79,7 @@
 		public static function must_be_present(){
 			global $db;
 			$list=array();
-			$q=$db->query("select elected.id from session, elected_committee, elected where(session.start<NOW() and session.end>NOW() and session.id_committee=elected_committee.id_committee and elected_committee.id_elected=elected.id)");
+			$q=$db->query("select elected.id from session, elected_commitee, elected where (session.start<NOW() and session.end>NOW() and session.id_committee=elected_commitee.id_committee and elected_commitee.id_elected=elected.id)") or die($db->error);
 			while ($r=$q->fetch_row()) {
 				$list[]=new elected($r[0]);
 			}
