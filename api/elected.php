@@ -56,7 +56,7 @@
         "name"=>$elected->name,
         "state"=>$elected->state,
         "image"=>$elected->image,
-        "score"=>$elected->score,
+        "score"=>($elected->score?$elected->score:0),
         "count_absences"=>$elected->count_total_absence,
         "count_presences"=>$elected->count_total_presence,
         "count_sessions"=>$elected->count_total_sessions,
